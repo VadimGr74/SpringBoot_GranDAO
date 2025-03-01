@@ -1,0 +1,23 @@
+<Productos>
+    <Producto>
+        <ID>1</ID>
+        <Nombre>Televisor 4K</Nombre>
+        <Descripcion>Smart TV de 55 pulgadas</Descripcion>
+        <Precio>599.99</Precio>
+        <Stock>10</Stock>
+    </Producto>
+    <Producto>
+        <ID>2</ID>
+        <Nombre>Portátil Gaming</Nombre>
+        <Descripcion>Procesador Intel i7, 16GB RAM</Descripcion>
+        <Precio>1299.99</Precio>
+        <Stock>5</Stock>
+    </Producto>
+    <Producto>
+        <ID>3</ID>
+        <Nombre>Teléfono Móvil</Nombre>
+        <Descripcion>Pantalla OLED, 128GB almacenamiento</Descripcion>
+        <Precio>799.50</Precio>
+        <Stock>15</Stock>
+    </Producto>
+</Productos>
