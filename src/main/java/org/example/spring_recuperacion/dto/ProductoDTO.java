@@ -36,6 +36,17 @@ public class ProductoDTO {
         this.nombre = nombre;
     }
 
+    @Override
+    public String toString() {
+        return "ProductoDTO{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                ", stock=" + stock +
+                '}';
+    }
+
     public String getDescripcion() {
         return descripcion;
     }

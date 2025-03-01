@@ -41,25 +41,86 @@ public class GeneralService {
         this.devolucionRepository = devolucionRepository;
     }
 
+    // ==============================
     // CRUD para Clientes usando DAOFicherosTXT
+    // ==============================
+
     public List<ClienteDTO> obtenerTodosLosClientes() {
         return daoClientes.leerFicheroTXT();
+    }
+
+    public Optional<ClienteDTO> obtenerClientePorId(Integer id) {
+        return daoClientes.leerFicheroTXT().stream()
+                .filter(cliente -> cliente.getId().equals(id))
+                .findFirst();
     }
 
     public void guardarClientes(List<ClienteDTO> clientes) {
         daoClientes.escribirFicheroTXT(clientes);
     }
 
+    public ClienteDTO actualizarCliente(Integer id, ClienteDTO clienteDTO) {
+        List<ClienteDTO> clientes = daoClientes.leerFicheroTXT();
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getId().equals(id)) {
+                clientes.set(i, clienteDTO);
+                daoClientes.escribirFicheroTXT(clientes);
+                return clienteDTO;
+            }
+        }
+        throw new RuntimeException("Cliente no encontrado con ID: " + id);
+    }
+
+    public void eliminarCliente(Integer id) {
+        List<ClienteDTO> clientes = daoClientes.leerFicheroTXT()
+                .stream()
+                .filter(cliente -> !cliente.getId().equals(id))
+                .collect(Collectors.toList());
+        daoClientes.escribirFicheroTXT(clientes);
+    }
+
+    // ==============================
     // CRUD para Productos usando DAOFicherosXML
+    // ==============================
+
     public List<ProductoDTO> obtenerTodosLosProductos() {
         return daoProductos.leerFicheroXML();
+    }
+
+    public Optional<ProductoDTO> obtenerProductoPorId(Integer id) {
+        return daoProductos.leerFicheroXML().stream()
+                .filter(producto -> producto.getId().equals(id))
+                .findFirst();
     }
 
     public void guardarProductos(List<ProductoDTO> productos) {
         daoProductos.escribirFicheroXML(productos);
     }
 
+    public ProductoDTO actualizarProducto(Integer id, ProductoDTO productoDTO) {
+        List<ProductoDTO> productos = daoProductos.leerFicheroXML();
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getId().equals(id)) {
+                productos.set(i, productoDTO);
+                daoProductos.escribirFicheroXML(productos);
+                return productoDTO;
+            }
+        }
+        throw new RuntimeException("Producto no encontrado con ID: " + id);
+    }
+
+    public void eliminarProducto(Integer id) {
+        List<ProductoDTO> productos = daoProductos.leerFicheroXML()
+                .stream()
+                .filter(producto -> !producto.getId().equals(id))
+                .collect(Collectors.toList());
+        daoProductos.escribirFicheroXML(productos);
+    }
+
+    // ==============================
     // CRUD para Compras usando JPA Repository
+    // ==============================
+
     public List<CompraDTO> obtenerTodasLasCompras() {
         List<Compra> compras = compraRepository.findAll();
         return compras.stream().map(this::convertirCompraACompraDTO).collect(Collectors.toList());
@@ -79,7 +140,10 @@ public class GeneralService {
         compraRepository.deleteById(id);
     }
 
+    // ==============================
     // CRUD para Devoluciones usando MongoDB Repository
+    // ==============================
+
     public List<DevolucioneDTO> obtenerTodasLasDevoluciones() {
         List<Devolucione> devoluciones = devolucionRepository.findAll();
         return devoluciones.stream().map(this::convertirDevolucionADevolucionDTO).collect(Collectors.toList());
@@ -99,13 +163,16 @@ public class GeneralService {
         devolucionRepository.deleteById(id);
     }
 
+    // ==============================
     // Métodos de conversión entre Entidades y DTOs
+    // ==============================
+
     private CompraDTO convertirCompraACompraDTO(Compra compra) {
         return new CompraDTO(compra.getId(), compra.getCliente(), compra.getProducto(), compra.getFecha(), compra.getCantidad(), compra.getImporte());
     }
 
     private Compra convertirCompraDTOACompra(CompraDTO compraDTO) {
-        return new Compra(compraDTO.getId(), compraDTO.getCliente(), compraDTO.getProducto(),  compraDTO.getFecha(), compraDTO.getCantidad(), compraDTO.getImporte());
+        return new Compra(compraDTO.getId(), compraDTO.getCliente(), compraDTO.getProducto(), compraDTO.getFecha(), compraDTO.getCantidad(), compraDTO.getImporte());
     }
 
     private DevolucioneDTO convertirDevolucionADevolucionDTO(Devolucione devolucion) {
