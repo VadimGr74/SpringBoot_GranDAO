@@ -108,13 +108,13 @@ public class GeneralService {
     public ProductoDTO actualizarProducto(Integer id, ProductoDTO productoDTO) {
         List<ProductoDTO> productos = daoProductos.leerFicheroXML();
         for (int i = 0; i < productos.size(); i++) {
-            if (Objects.equals(productoDTO.getId(), productos.get(i).getId())) {
+            if (Objects.equals(id, productos.get(i).getId())) {
                 productos.set(i, productoDTO);
                 daoProductos.escribirFicheroXML(productos);
                 return productoDTO;
             }
         }
-        throw new RuntimeException("Producto no encontrado con ID: " + id);
+        throw new RuntimeException("Producto no encontrado con ID: " + productoDTO.getId());
     }
 
     public void eliminarProducto(Integer id) {
@@ -141,7 +141,10 @@ public class GeneralService {
     public CompraDTO guardarCompra(CompraDTO compraDTO) {
         Compra compra = convertirCompraDTOACompra(compraDTO);
         Compra compraGuardada = compraRepository.save(compra);
+        Producto producto = convertirProductoDTO(obtenerProductoPorId(compraGuardada.getProducto()));
+        producto.setStock(producto.getStock() - compraGuardada.getCantidad());
         System.out.println("CompraDTO recibido: " + compraGuardada);
+        actualizarProducto(producto.getId(),(convertirProductoDTO(producto)));
         return convertirCompraACompraDTO(compraGuardada);
     }
 
@@ -178,6 +181,10 @@ public class GeneralService {
     public DevolucioneDTO guardarDevolucion(DevolucioneDTO devolucionDTO) {
         Devolucione devolucion = convertirDevolucionDTOADevolucion(devolucionDTO);
         Devolucione devolucionGuardada = devolucionRepository.save(devolucion);
+        Producto producto = convertirProductoDTO(obtenerProductoPorId(devolucionGuardada.getProducto().getId()));
+        producto.setStock(producto.getStock() + devolucionGuardada.getCantidad());
+        System.out.println("CompraDTO recibido: " + devolucionGuardada);
+        actualizarProducto(producto.getId(),(convertirProductoDTO(producto)));
         return convertirDevolucionADevolucionDTO(devolucionGuardada);
     }
 
@@ -234,7 +241,11 @@ public class GeneralService {
 
 
     private DevolucioneDTO convertirDevolucionADevolucionDTO(Devolucione devolucion) {
-        return new DevolucioneDTO(devolucion.getId(), devolucion.getCliente(), devolucion.getProducto(), devolucion.getFecha(), devolucion.getCantidad(), devolucion.getMotivo());
+        ClienteDTO clienteDTO = obtenerClientePorId(devolucion.getCliente().getId());
+        Cliente cliente = convertirClienteDTO(clienteDTO);
+        ProductoDTO productoDTO = obtenerProductoPorId(devolucion.getProducto().getId());
+        Producto producto = convertirProductoDTO(productoDTO);
+        return new DevolucioneDTO(devolucion.getId(), cliente, producto, devolucion.getFecha(), devolucion.getCantidad(), devolucion.getMotivo());
     }
     private Cliente convertirClienteDTO(ClienteDTO clienteDTO) {
         return new Cliente(clienteDTO.getId(), clienteDTO.getNombre(), clienteDTO.getApellido(), clienteDTO.getNickname(), clienteDTO.getPassword(), clienteDTO.getTelefono(), clienteDTO.getDomicilio());

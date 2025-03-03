@@ -32,13 +32,6 @@ public class Producto {
     public Producto() {
 
     }
-    public Producto(String nombre, String descripcion, Float precio, Integer stock) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.stock = stock;
-
-    }
     public Producto(int id, String nombre, String descripcion, Float precio, Integer stock) {
         this.id = id;
         this.nombre = nombre;
@@ -47,7 +40,7 @@ public class Producto {
         this.stock = stock;
 
     }
-    public Producto(int id) {
+    public Producto(Integer id) {
         this.id = id;
     }
 

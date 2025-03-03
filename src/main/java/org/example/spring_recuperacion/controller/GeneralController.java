@@ -129,7 +129,7 @@ public class GeneralController {
     }
 
     @PostMapping("/compras")
-    public ResponseEntity<?> createCompra(@RequestBody CompraDTO compraDTO) {
+    public ResponseEntity<?> createCompra(@Validated @RequestBody CompraDTO compraDTO) {
         System.out.println("Datos recibidos: " + compraDTO.toString());
 
         if (compraDTO.getCliente() == null) {
@@ -167,7 +167,7 @@ public class GeneralController {
     }
 
     @PostMapping("/devoluciones")
-    public ResponseEntity<DevolucioneDTO> createDevolucion(@RequestBody DevolucioneDTO devolucioneDTO) {
+    public ResponseEntity<DevolucioneDTO> createDevolucion(@Validated @RequestBody DevolucioneDTO devolucioneDTO) {
         return ResponseEntity.ok(generalService.guardarDevolucion(devolucioneDTO));
     }
 

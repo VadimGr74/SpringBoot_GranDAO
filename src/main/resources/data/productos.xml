@@ -5,21 +5,14 @@
         <Nombre>Laptop</Nombre>
         <Descripcion>Laptop de alto rendimiento</Descripcion>
         <Precio>1500.99</Precio>
-        <Stock>25</Stock>
-    </Producto>
-    <Producto>
-        <ID>102</ID>
-        <Nombre>Smartphone</Nombre>
-        <Descripcion>Teléfono inteligente con cámara de 108MP</Descripcion>
-        <Precio>899.50</Precio>
-        <Stock>40</Stock>
+        <Stock>-13</Stock>
     </Producto>
     <Producto>
         <ID>103</ID>
         <Nombre>Tablet</Nombre>
         <Descripcion>Tablet de 10 pulgadas con pantalla Retina</Descripcion>
-        <Precio>650.00</Precio>
-        <Stock>30</Stock>
+        <Precio>650.0</Precio>
+        <Stock>-10</Stock>
     </Producto>
     <Producto>
         <ID>104</ID>
@@ -33,20 +26,20 @@
         <Nombre>Teclado mecánico</Nombre>
         <Descripcion>Teclado RGB con switches mecánicos</Descripcion>
         <Precio>120.75</Precio>
-        <Stock>50</Stock>
+        <Stock>51</Stock>
     </Producto>
     <Producto>
         <ID>106</ID>
         <Nombre>Mouse gamer</Nombre>
         <Descripcion>Mouse óptico con 16000 DPI</Descripcion>
         <Precio>75.99</Precio>
-        <Stock>35</Stock>
+        <Stock>15</Stock>
     </Producto>
     <Producto>
         <ID>107</ID>
         <Nombre>Impresora</Nombre>
         <Descripcion>Impresora multifunción Wi-Fi</Descripcion>
-        <Precio>210.30</Precio>
+        <Precio>210.3</Precio>
         <Stock>15</Stock>
     </Producto>
     <Producto>
@@ -67,7 +60,7 @@
         <ID>110</ID>
         <Nombre>Memoria RAM</Nombre>
         <Descripcion>Memoria DDR4 de 32GB</Descripcion>
-        <Precio>180.50</Precio>
+        <Precio>180.5</Precio>
         <Stock>60</Stock>
     </Producto>
     <Producto>
@@ -88,7 +81,7 @@
         <ID>113</ID>
         <Nombre>Router Wi-Fi</Nombre>
         <Descripcion>Router de doble banda con Wi-Fi 6</Descripcion>
-        <Precio>90.50</Precio>
+        <Precio>90.5</Precio>
         <Stock>40</Stock>
     </Producto>
     <Producto>
@@ -102,14 +95,14 @@
         <ID>115</ID>
         <Nombre>Auriculares Bluetooth</Nombre>
         <Descripcion>Auriculares inalmbricos con cancelación de ruido</Descripcion>
-        <Precio>129.90</Precio>
+        <Precio>129.9</Precio>
         <Stock>75</Stock>
     </Producto>
     <Producto>
         <ID>116</ID>
         <Nombre>Microfono USB</Nombre>
         <Descripcion>Micrófono condensador para streaming</Descripcion>
-        <Precio>89.50</Precio>
+        <Precio>89.5</Precio>
         <Stock>20</Stock>
     </Producto>
     <Producto>
@@ -132,12 +125,5 @@
         <Descripcion>Gabinete ATX con ventilación RGB</Descripcion>
         <Precio>110.75</Precio>
         <Stock>25</Stock>
-    </Producto>
-    <Producto>
-        <ID>120</ID>
-        <Nombre>Controlador de juegos</Nombre>
-        <Descripcion>Mando inalámbrico compatible con PC y consolas</Descripcion>
-        <Precio>59.99</Precio>
-        <Stock>50</Stock>
     </Producto>
 </Productos>
