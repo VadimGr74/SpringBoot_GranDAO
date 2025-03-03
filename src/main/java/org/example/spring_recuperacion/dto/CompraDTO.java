@@ -57,20 +57,21 @@ public class CompraDTO {
         this.id = id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
 
-    public void setCliente(@NotNull(message = "El cliente es obligatorio") Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Producto getProducto() {
+    public @NotNull(message = "El producto es obligatorio") Producto getProducto() {
         return producto;
     }
 
     public void setProducto(@NotNull(message = "El producto es obligatorio") Producto producto) {
         this.producto = producto;
+    }
+
+    public @NotNull(message = "El cliente es obligatorio") Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(@NotNull(message = "El cliente es obligatorio") Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public @NotNull(message = "La fecha no puede ser nula") LocalDate getFecha() {

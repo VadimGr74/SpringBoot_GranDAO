@@ -43,6 +43,14 @@ public class ClienteDTO {
     }
 
     public ClienteDTO(Integer id, String nombre, String apellido, String nickname, String password, String telefono, String domicilio) {
+    this.id = id;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.nickname = nickname;
+    this.password = password;
+    this.telefono = telefono;
+    this.domicilio = domicilio;
+
     }
     public ClienteDTO() {
 

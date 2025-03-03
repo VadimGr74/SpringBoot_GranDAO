@@ -21,6 +21,12 @@ public class ProductoDTO {
     private Integer stock;
 
     public ProductoDTO(Integer id, String nombre, String descripcion, Float precio, Integer stock) {
+    this.id = id;
+    this.nombre = nombre;
+    this.descripcion = descripcion;
+    this.precio = precio;
+    this.stock = stock;
+
     }
     public ProductoDTO() {}
     public Integer getId() {

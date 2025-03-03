@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,10 +94,11 @@ public class GeneralService {
         return daoProductos.leerFicheroXML();
     }
 
-    public Optional<ProductoDTO> obtenerProductoPorId(Integer id) {
+    public ProductoDTO obtenerProductoPorId(Integer id) {
         return daoProductos.leerFicheroXML().stream()
                 .filter(productoDTO -> productoDTO.getId() != null && productoDTO.getId().equals(id))
-                .findFirst();
+                .findFirst()
+                .orElse(null); // Return null if no product is found
     }
 
     public void guardarProductos(List<ProductoDTO> productos) {
@@ -156,12 +155,24 @@ public class GeneralService {
     // ==============================
 
     public List<DevolucioneDTO> obtenerTodasLasDevoluciones() {
+        // Traer todas las devoluciones del repositorio
         List<Devolucione> devoluciones = devolucionRepository.findAll();
-        return devoluciones.stream().map(this::convertirDevolucionADevolucionDTO).collect(Collectors.toList());
+
+        // Convertir cada devolución a su correspondiente DTO
+        List<DevolucioneDTO> devolucionesDTO = devoluciones.stream()
+                .filter(Objects::nonNull) // Evitar nulos
+                .map(this::convertirDevolucionADevolucionDTO)
+                .collect(Collectors.toList());
+
+
+        return devolucionesDTO;
     }
 
-    public Optional<DevolucioneDTO> obtenerDevolucionPorId(String id) {
-        return devolucionRepository.findById(id).map(this::convertirDevolucionADevolucionDTO);
+
+    public Optional<DevolucioneDTO> obtenerDevolucionPorId(Integer id) {
+        Devolucione devolucione = devolucionRepository.findDevolucioneById(id);
+        DevolucioneDTO devolucioneDTO = convertirDevolucionADevolucionDTO(devolucione);
+        return Optional.of(devolucioneDTO);
     }
 
     public DevolucioneDTO guardarDevolucion(DevolucioneDTO devolucionDTO) {
@@ -170,8 +181,15 @@ public class GeneralService {
         return convertirDevolucionADevolucionDTO(devolucionGuardada);
     }
 
-    public void eliminarDevolucion(String id) {
-        devolucionRepository.deleteById(id);
+    public Integer eliminarDevolucion(Integer id) {
+
+        int i = devolucionRepository.deleteDevolucioneById(id);
+        if (i > 0) {
+            System.out.println("Devolucion eliminada con ID: " + id);
+            return i;
+        } else {
+            throw new RuntimeException("Devolucion no encontrado con ID: " + id);
+        }
     }
 
     // ==============================
@@ -179,8 +197,13 @@ public class GeneralService {
     // ==============================
 
     private CompraDTO convertirCompraACompraDTO(Compra compra) {
-        return new CompraDTO(compra.getId(), compra.getCliente(), compra.getProducto(), compra.getFecha(), compra.getCantidad(), compra.getImporte());
+        ClienteDTO clienteDTO = obtenerClientePorId(compra.getCliente());
+        Cliente cliente = convertirClienteDTO(clienteDTO);
+        ProductoDTO productoDTO = obtenerProductoPorId(compra.getProducto());
+        Producto producto = convertirProductoDTO(productoDTO);
+        return new CompraDTO(compra.getId(), cliente, producto, compra.getFecha(), compra.getCantidad(), compra.getImporte());
     }
+
 
     public Compra convertirCompraDTOACompra(CompraDTO compraDTO) {
         Compra compra = new Compra();
@@ -189,19 +212,19 @@ public class GeneralService {
         compra.setImporte(compraDTO.getImporte());
 
         // Validar y asignar Cliente
-        if (compraDTO.getCliente() != null && compraDTO.getCliente().getId() != null) {
+        if (compraDTO.getCliente() != null) {
             Cliente cliente = new Cliente();
             cliente.setId(compraDTO.getCliente().getId());
-            compra.setCliente(cliente);
+            compra.setCliente(cliente.getId());
         } else {
             throw new IllegalArgumentException("El cliente o el cliente_id no pueden ser nulos");
         }
 
-        // ✅ Validar y asignar Producto
-        if (compraDTO.getProducto() != null && compraDTO.getProducto().getId() != null) {
+        // Validar y asignar Producto
+        if (compraDTO.getProducto() != null) {
             Producto producto = new Producto();
             producto.setId(compraDTO.getProducto().getId());
-            compra.setProducto(producto);
+            compra.setProducto(producto.getId());
         } else {
             throw new IllegalArgumentException("El producto o el producto_id no pueden ser nulos");
         }
@@ -212,6 +235,34 @@ public class GeneralService {
 
     private DevolucioneDTO convertirDevolucionADevolucionDTO(Devolucione devolucion) {
         return new DevolucioneDTO(devolucion.getId(), devolucion.getCliente(), devolucion.getProducto(), devolucion.getFecha(), devolucion.getCantidad(), devolucion.getMotivo());
+    }
+    private Cliente convertirClienteDTO(ClienteDTO clienteDTO) {
+        return new Cliente(clienteDTO.getId(), clienteDTO.getNombre(), clienteDTO.getApellido(), clienteDTO.getNickname(), clienteDTO.getPassword(), clienteDTO.getTelefono(), clienteDTO.getDomicilio());
+    }
+    private Producto convertirProductoDTO(ProductoDTO productoDTO) {
+        return new Producto(productoDTO.getId(), productoDTO.getNombre(), productoDTO.getDescripcion(),  productoDTO.getPrecio(), productoDTO.getStock());
+    }
+
+    private ClienteDTO convertirClienteDTO(Cliente cliente) {
+        ClienteDTO clienteDTO = new ClienteDTO();
+        clienteDTO.setId(cliente.getId());
+        clienteDTO.setNombre(cliente.getNombre());
+        clienteDTO.setApellido(cliente.getApellido());
+        clienteDTO.setNickname(cliente.getNickname());
+        clienteDTO.setPassword(cliente.getPassword());
+        clienteDTO.setTelefono(cliente.getTelefono());
+        clienteDTO.setDomicilio(cliente.getDomicilio());
+        return clienteDTO;
+    }
+    private ProductoDTO convertirProductoDTO(Producto producto) {
+        ProductoDTO productoDTO = new ProductoDTO();
+        productoDTO.setId(producto.getId());
+        productoDTO.setNombre(producto.getNombre());
+        productoDTO.setDescripcion(producto.getDescripcion());
+        productoDTO.setPrecio(producto.getPrecio());
+        productoDTO.setStock(producto.getStock());
+        return productoDTO;
+
     }
 
     private Devolucione convertirDevolucionDTOADevolucion(DevolucioneDTO devolucionDTO) {

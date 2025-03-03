@@ -2,11 +2,13 @@ package org.example.spring_recuperacion.modelo;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "devoluciones")
+@Document(collection = "devoluciones")
 public class Devolucione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,12 @@ public class Devolucione {
     }
 
     public Devolucione(Integer id, @NotNull(message = "El cliente es obligatorio") Cliente cliente, @NotNull(message = "El producto es obligatorio") Producto producto, @NotNull(message = "La fecha no puede ser nula") LocalDate fecha, Integer cantidad, String motivo) {
+    this.id = id;
+    this.cliente = cliente;
+    this.producto = producto;
+    this.fecha = fecha;
+    this.cantidad = cantidad;
+    this.motivo = motivo;
     }
 
     public Integer getId() {

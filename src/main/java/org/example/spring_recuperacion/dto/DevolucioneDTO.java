@@ -3,6 +3,7 @@ package org.example.spring_recuperacion.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
+import org.bson.types.ObjectId;
 import org.example.spring_recuperacion.modelo.Cliente;
 import org.example.spring_recuperacion.modelo.Producto;
 
@@ -26,6 +27,13 @@ public class DevolucioneDTO {
     private String motivo;
 
     public DevolucioneDTO(Integer id, Cliente cliente, Producto producto, LocalDate fecha, Integer cantidad, String motivo) {
+    this.id = id;
+    this.cliente = cliente;
+    this.producto = producto;
+    this.fecha = fecha;
+    this.cantidad = cantidad;
+    this.motivo = motivo;
+
     }
 public DevolucioneDTO() {}
     public Integer getId() {

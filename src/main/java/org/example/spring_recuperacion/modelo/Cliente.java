@@ -41,10 +41,22 @@ public class Cliente {
     private String domicilio;
 
     public Cliente(Integer id, @Pattern(regexp = "^[a-zA-Z]+$", message = "El nombre solo puede contener letras") @NotNull(message = "El nombre no puede ser nulo") String nombre, @NotNull(message = "El apellido no puede ser nulo") String apellido, @NotNull(message = "El nickname no puede ser nulo") String nickname, @Size(min = 6, max = 10, message = "La contraseña debe tener entre 6 y 10 caracteres") @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "La contraseña solo puede contener letras y números") @NotNull(message = "La contraseña no puede ser nula") String password, @Size(min = 9, max = 9, message = "El teléfono debe tener 9 dígitos") @Pattern(regexp = "^[0-9]+$", message = "El teléfono solo puede contener números") String telefono, String domicilio) {
+    this.id = id;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.nickname = nickname;
+    this.password = password;
+    this.telefono = telefono;
+    this.domicilio = domicilio;
+
     }
 
     public Cliente() {
 
+    }
+
+    public Cliente(Integer cliente) {
+        this.id = cliente;
     }
 
     public Integer getId() {

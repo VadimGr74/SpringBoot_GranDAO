@@ -1,5 +1,6 @@
 package org.example.spring_recuperacion.controller;
 
+import org.bson.types.ObjectId;
 import org.example.spring_recuperacion.dto.ClienteDTO;
 import org.example.spring_recuperacion.dto.CompraDTO;
 import org.example.spring_recuperacion.dto.DevolucioneDTO;
@@ -80,9 +81,11 @@ public class GeneralController {
     // Obtener un producto por ID
     @GetMapping("/productos/{id}")
     public ResponseEntity<ProductoDTO> getProductoById(@PathVariable Integer id) {
-        return generalService.obtenerProductoPorId(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ProductoDTO productoDTO = generalService.obtenerProductoPorId(id);
+        if (productoDTO != null) {
+            return ResponseEntity.ok(productoDTO);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     // Guardar una lista de productos
@@ -129,10 +132,10 @@ public class GeneralController {
     public ResponseEntity<?> createCompra(@RequestBody CompraDTO compraDTO) {
         System.out.println("Datos recibidos: " + compraDTO.toString());
 
-        if (compraDTO.getCliente() == null || compraDTO.getCliente().getId() == null) {
+        if (compraDTO.getCliente() == null) {
             return ResponseEntity.badRequest().body("El cliente no puede ser nulo y debe tener un ID.");
         }
-        if (compraDTO.getProducto() == null || compraDTO.getProducto().getId() == null) {
+        if (compraDTO.getProducto() == null) {
             return ResponseEntity.badRequest().body("El producto no puede ser nulo y debe tener un ID.");
         }
 
@@ -157,7 +160,7 @@ public class GeneralController {
     }
 
     @GetMapping("/devoluciones/{id}")
-    public ResponseEntity<DevolucioneDTO> getDevolucionById(@PathVariable String id) {
+    public ResponseEntity<DevolucioneDTO> getDevolucionById(@PathVariable Integer id) {
         return generalService.obtenerDevolucionPorId(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -169,8 +172,12 @@ public class GeneralController {
     }
 
     @DeleteMapping("/devoluciones/{id}")
-    public ResponseEntity<Void> deleteDevolucion(@PathVariable String id) {
-        generalService.eliminarDevolucion(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteDevolucion(@PathVariable Integer id) {
+        int i = generalService.eliminarDevolucion(id);
+        if (i > 0) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -12,14 +12,11 @@ public class Compra {    @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Column(name = "id", nullable = false)
 private Integer id;
+    @Column(name = "cliente_id",nullable = false)
+    private Integer cliente;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "producto_id", nullable = false)
-    private Producto producto;
+    @Column(name = "producto_id", nullable = false)
+    private Integer producto;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha", nullable = false)
@@ -35,7 +32,7 @@ private Integer id;
     }
 
 
-    public Compra(Integer id, Cliente cliente, Producto producto, @NotNull(message = "La fecha no puede ser nula") LocalDate fecha, Integer cantidad, Float importe) {
+    public Compra(Integer id, Integer cliente, Integer producto, @NotNull(message = "La fecha no puede ser nula") LocalDate fecha, Integer cantidad, Float importe) {
     this.id = id;
     this.cliente = cliente;
     this.producto = producto;
@@ -52,19 +49,19 @@ private Integer id;
         this.id = id;
     }
 
-    public Cliente getCliente() {
+    public Integer getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Integer cliente) {
         this.cliente = cliente;
     }
 
-    public Producto getProducto() {
+    public Integer getProducto() {
         return producto;
     }
 
-    public void setProducto(Producto producto) {
+    public void setProducto(Integer producto) {
         this.producto = producto;
     }
 
