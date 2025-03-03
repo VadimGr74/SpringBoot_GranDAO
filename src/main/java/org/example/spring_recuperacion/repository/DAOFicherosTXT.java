@@ -20,12 +20,32 @@ public class DAOFicherosTXT {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(",");
+                System.out.println(datos.length);
+                // Validar que la línea tiene 7 valores
                 if (datos.length == 7) {
-                    ClienteDTO cliente = new ClienteDTO(
-                            Integer.parseInt(datos[0]), datos[1], datos[2],
-                            datos[3], datos[4], datos[5], datos[6]
-                    );
-                    clientes.add(cliente);
+                    try {
+                        Integer id = Integer.parseInt(datos[0]);
+                        String nombre = datos[1];
+                        String apellido = datos[2];
+                        String nickname = datos[3];
+                        String password = datos[4];
+                        String telefono = datos[5];
+                        String domicilio = datos[6];
+                        ClienteDTO clienteDTO = new ClienteDTO();
+                        clienteDTO.setId(id);
+                        clienteDTO.setNombre(nombre);
+                        clienteDTO.setApellido(apellido);
+                        clienteDTO.setNickname(nickname);
+                        clienteDTO.setPassword(password);
+                        clienteDTO.setTelefono(telefono);
+                        clienteDTO.setDomicilio(domicilio);
+                        clientes.add(clienteDTO);
+                        System.out.println(clienteDTO.toString());
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error al convertir ID en línea: " + linea);
+                    }
+                } else {
+                    System.err.println("Línea incorrecta, no tiene 7 valores: " + linea);
                 }
             }
         } catch (IOException e) {
@@ -33,6 +53,7 @@ public class DAOFicherosTXT {
         }
         return clientes;
     }
+
 
     public void escribirFicheroTXT(List<ClienteDTO> clientes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivoClientes))) {

@@ -8,11 +8,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "compras")
-public class Compra {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class Compra {    @Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "id", nullable = false)
+private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -35,7 +34,14 @@ public class Compra {
 
     }
 
+
     public Compra(Integer id, Cliente cliente, Producto producto, @NotNull(message = "La fecha no puede ser nula") LocalDate fecha, Integer cantidad, Float importe) {
+    this.id = id;
+    this.cliente = cliente;
+    this.producto = producto;
+    this.fecha = fecha;
+    this.importe = importe;
+    this.cantidad = cantidad;
     }
 
     public Integer getId() {

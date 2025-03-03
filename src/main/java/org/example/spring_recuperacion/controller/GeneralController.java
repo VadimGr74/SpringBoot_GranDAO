@@ -4,10 +4,12 @@ import org.example.spring_recuperacion.dto.ClienteDTO;
 import org.example.spring_recuperacion.dto.CompraDTO;
 import org.example.spring_recuperacion.dto.DevolucioneDTO;
 import org.example.spring_recuperacion.dto.ProductoDTO;
+import org.example.spring_recuperacion.modelo.Compra;
 import org.example.spring_recuperacion.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,19 +29,23 @@ public class GeneralController {
     @GetMapping("/clientes")
     public ResponseEntity<List<ClienteDTO>> getAllClientes() {
         return ResponseEntity.ok(generalService.obtenerTodosLosClientes());
+
     }
 
     // Obtener un cliente por ID
     @GetMapping("/clientes/{id}")
     public ResponseEntity<ClienteDTO> getClienteById(@PathVariable Integer id) {
-        return generalService.obtenerClientePorId(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ClienteDTO clienteDTO =  generalService.obtenerClientePorId(id);
+               if (clienteDTO != null) {
+                   return ResponseEntity.ok(clienteDTO);
+               } else {
+                   return ResponseEntity.notFound().build();
+               }
     }
 
     // Guardar una lista de clientes
     @PostMapping("/clientes")
-    public ResponseEntity<Void> saveClientes(@RequestBody List<ClienteDTO> clientes) {
+    public ResponseEntity<List<ClienteDTO>> saveClientes(@Validated @RequestBody List<ClienteDTO> clientes) {
         for (ClienteDTO cliente : clientes) {
             System.out.println("Datos recibidos: " + cliente);
         }
@@ -81,7 +87,7 @@ public class GeneralController {
 
     // Guardar una lista de productos
     @PostMapping("/productos")
-    public ResponseEntity<Void> saveProductos(@RequestBody List<ProductoDTO> productos) {
+    public ResponseEntity<Void> saveProductos(@Validated @RequestBody List<ProductoDTO> productos) {
         for (ProductoDTO producto : productos) {
             System.out.println("Datos recibidos: " + producto.toString());
         }
@@ -120,9 +126,20 @@ public class GeneralController {
     }
 
     @PostMapping("/compras")
-    public ResponseEntity<CompraDTO> createCompra(@RequestBody CompraDTO compraDTO) {
-        return ResponseEntity.ok(generalService.guardarCompra(compraDTO));
+    public ResponseEntity<?> createCompra(@RequestBody CompraDTO compraDTO) {
+        System.out.println("Datos recibidos: " + compraDTO.toString());
+
+        if (compraDTO.getCliente() == null || compraDTO.getCliente().getId() == null) {
+            return ResponseEntity.badRequest().body("El cliente no puede ser nulo y debe tener un ID.");
+        }
+        if (compraDTO.getProducto() == null || compraDTO.getProducto().getId() == null) {
+            return ResponseEntity.badRequest().body("El producto no puede ser nulo y debe tener un ID.");
+        }
+
+        CompraDTO savedCompra = generalService.guardarCompra(compraDTO);
+        return ResponseEntity.ok(savedCompra);
     }
+
 
     @DeleteMapping("/compras/{id}")
     public ResponseEntity<Void> deleteCompra(@PathVariable Integer id) {

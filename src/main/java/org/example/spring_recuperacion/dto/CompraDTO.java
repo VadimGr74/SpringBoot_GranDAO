@@ -24,7 +24,29 @@ public class CompraDTO {
     private Float importe;
     private Integer cantidad;
 
+    @Override
+    public String toString() {
+        return "CompraDTO{" +
+                "id=" + id +
+                ", cliente=" + cliente +
+                ", producto=" + producto +
+                ", fecha=" + fecha +
+                ", importe=" + importe +
+                ", cantidad=" + cantidad +
+                '}';
+    }
+
     public CompraDTO(Integer id, Cliente cliente, Producto producto, LocalDate fecha, Integer cantidad, Float importe) {
+    this.id = id;
+    this.cliente = cliente;
+    this.producto = producto;
+    this.fecha = fecha;
+    this.importe = importe;
+    this.cantidad = cantidad;
+
+    }
+    public CompraDTO() {
+
     }
 
     public Integer getId() {

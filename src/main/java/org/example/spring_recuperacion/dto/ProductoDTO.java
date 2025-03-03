@@ -1,8 +1,11 @@
 package org.example.spring_recuperacion.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 
 public class ProductoDTO {
+    @JsonProperty("id")
     private Integer id;
 
     @NotNull(message = "El nombre no puede ser nulo")
@@ -19,7 +22,7 @@ public class ProductoDTO {
 
     public ProductoDTO(Integer id, String nombre, String descripcion, Float precio, Integer stock) {
     }
-
+    public ProductoDTO() {}
     public Integer getId() {
         return id;
     }

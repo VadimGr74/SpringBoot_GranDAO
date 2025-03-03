@@ -27,7 +27,7 @@ public class DevolucioneDTO {
 
     public DevolucioneDTO(Integer id, Cliente cliente, Producto producto, LocalDate fecha, Integer cantidad, String motivo) {
     }
-
+public DevolucioneDTO() {}
     public Integer getId() {
         return id;
     }

@@ -46,14 +46,24 @@ public class DAOFicherosXML {
                 Node nodo = listaProductos.item(i);
                 if (nodo.getNodeType() == Node.ELEMENT_NODE) {
                     Element elemento = (Element) nodo;
-                    ProductoDTO producto = new ProductoDTO(
-                            Integer.parseInt(elemento.getElementsByTagName("ID").item(0).getTextContent()),
-                            elemento.getElementsByTagName("Nombre").item(0).getTextContent(),
-                            elemento.getElementsByTagName("Descripcion").item(0).getTextContent(),
-                            Float.parseFloat(elemento.getElementsByTagName("Precio").item(0).getTextContent()),
-                            Integer.parseInt(elemento.getElementsByTagName("Stock").item(0).getTextContent())
-                    );
-                    productos.add(producto);
+                    String idText = getTextFromElement(elemento, "ID");
+                    String nombre = getTextFromElement(elemento, "Nombre");
+                    String descripcion = getTextFromElement(elemento, "Descripcion");
+                    String precioText = getTextFromElement(elemento, "Precio");
+                    String stockText = getTextFromElement(elemento, "Stock");
+
+                    if (idText != null && precioText != null && stockText != null) {
+                        ProductoDTO producto = new ProductoDTO();
+                                producto.setId(Integer.parseInt(idText));
+                                producto.setNombre(nombre);
+                                producto.setDescripcion(descripcion);
+                                producto.setPrecio(Float.parseFloat(precioText));
+                                producto.setStock(Integer.parseInt(stockText));
+                                productos.add(producto);
+                    } else {
+                        System.err.println("Error: Uno de los valores es null en el XML");
+                    }
+
                 }
             }
         } catch (Exception e) {
@@ -106,4 +116,13 @@ public class DAOFicherosXML {
             e.printStackTrace();
         }
     }
+    private String getTextFromElement(Element element, String tagName) {
+        NodeList nodeList = element.getElementsByTagName(tagName);
+        if (nodeList.getLength() > 0) {
+            Node node = nodeList.item(0);
+            return node.getTextContent().trim();
+        }
+        return null;
+    }
+
 }

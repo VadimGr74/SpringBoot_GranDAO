@@ -23,7 +23,7 @@ public class ClienteDTO {
     @NotNull(message = "La contraseña no puede ser nula")
     private String password;
 
-    @Size(min = 9, max = 9, message = "El teléfono debe tener 9 dígitos")
+
     //@Pattern(regexp = "^\\+34 [679][0-9]{2} [0-9]{3} [0-9]{3}$", message = "Telefono en formato incorrecto")
     private String telefono;
 
@@ -44,6 +44,10 @@ public class ClienteDTO {
 
     public ClienteDTO(Integer id, String nombre, String apellido, String nickname, String password, String telefono, String domicilio) {
     }
+    public ClienteDTO() {
+
+    }
+
 
     public Integer getId() {
         return id;

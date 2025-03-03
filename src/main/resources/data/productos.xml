@@ -1,10 +1,143 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Productos>
     <Producto>
-        <ID>null</ID>
-        <Nombre/>
-        <Descripcion/>
-        <Precio>null</Precio>
-        <Stock>null</Stock>
+        <ID>101</ID>
+        <Nombre>Laptop</Nombre>
+        <Descripcion>Laptop de alto rendimiento</Descripcion>
+        <Precio>1500.99</Precio>
+        <Stock>25</Stock>
+    </Producto>
+    <Producto>
+        <ID>102</ID>
+        <Nombre>Smartphone</Nombre>
+        <Descripcion>Teléfono inteligente con cámara de 108MP</Descripcion>
+        <Precio>899.50</Precio>
+        <Stock>40</Stock>
+    </Producto>
+    <Producto>
+        <ID>103</ID>
+        <Nombre>Tablet</Nombre>
+        <Descripcion>Tablet de 10 pulgadas con pantalla Retina</Descripcion>
+        <Precio>650.00</Precio>
+        <Stock>30</Stock>
+    </Producto>
+    <Producto>
+        <ID>104</ID>
+        <Nombre>Monitor</Nombre>
+        <Descripcion>Monitor 4K de 27 pulgadas</Descripcion>
+        <Precio>450.99</Precio>
+        <Stock>20</Stock>
+    </Producto>
+    <Producto>
+        <ID>105</ID>
+        <Nombre>Teclado mecánico</Nombre>
+        <Descripcion>Teclado RGB con switches mecánicos</Descripcion>
+        <Precio>120.75</Precio>
+        <Stock>50</Stock>
+    </Producto>
+    <Producto>
+        <ID>106</ID>
+        <Nombre>Mouse gamer</Nombre>
+        <Descripcion>Mouse óptico con 16000 DPI</Descripcion>
+        <Precio>75.99</Precio>
+        <Stock>35</Stock>
+    </Producto>
+    <Producto>
+        <ID>107</ID>
+        <Nombre>Impresora</Nombre>
+        <Descripcion>Impresora multifunción Wi-Fi</Descripcion>
+        <Precio>210.30</Precio>
+        <Stock>15</Stock>
+    </Producto>
+    <Producto>
+        <ID>108</ID>
+        <Nombre>Disco SSD</Nombre>
+        <Descripcion>SSD NVMe de 1TB</Descripcion>
+        <Precio>140.89</Precio>
+        <Stock>45</Stock>
+    </Producto>
+    <Producto>
+        <ID>109</ID>
+        <Nombre>Tarjeta Gráfica</Nombre>
+        <Descripcion>Tarjeta gráfica RTX 3080</Descripcion>
+        <Precio>999.99</Precio>
+        <Stock>10</Stock>
+    </Producto>
+    <Producto>
+        <ID>110</ID>
+        <Nombre>Memoria RAM</Nombre>
+        <Descripcion>Memoria DDR4 de 32GB</Descripcion>
+        <Precio>180.50</Precio>
+        <Stock>60</Stock>
+    </Producto>
+    <Producto>
+        <ID>111</ID>
+        <Nombre>Placa Base</Nombre>
+        <Descripcion>Placa base compatible con Intel 12th Gen</Descripcion>
+        <Precio>220.99</Precio>
+        <Stock>25</Stock>
+    </Producto>
+    <Producto>
+        <ID>112</ID>
+        <Nombre>Fuente de Poder</Nombre>
+        <Descripcion>Fuente de 750W certificada 80+ Gold</Descripcion>
+        <Precio>130.75</Precio>
+        <Stock>30</Stock>
+    </Producto>
+    <Producto>
+        <ID>113</ID>
+        <Nombre>Router Wi-Fi</Nombre>
+        <Descripcion>Router de doble banda con Wi-Fi 6</Descripcion>
+        <Precio>90.50</Precio>
+        <Stock>40</Stock>
+    </Producto>
+    <Producto>
+        <ID>114</ID>
+        <Nombre>Smartwatch</Nombre>
+        <Descripcion>Reloj inteligente con medidor de oxígeno</Descripcion>
+        <Precio>199.99</Precio>
+        <Stock>55</Stock>
+    </Producto>
+    <Producto>
+        <ID>115</ID>
+        <Nombre>Auriculares Bluetooth</Nombre>
+        <Descripcion>Auriculares inalmbricos con cancelación de ruido</Descripcion>
+        <Precio>129.90</Precio>
+        <Stock>75</Stock>
+    </Producto>
+    <Producto>
+        <ID>116</ID>
+        <Nombre>Microfono USB</Nombre>
+        <Descripcion>Micrófono condensador para streaming</Descripcion>
+        <Precio>89.50</Precio>
+        <Stock>20</Stock>
+    </Producto>
+    <Producto>
+        <ID>117</ID>
+        <Nombre>Cámara Web</Nombre>
+        <Descripcion>Cámara Full HD con enfoque automático</Descripcion>
+        <Precio>69.99</Precio>
+        <Stock>35</Stock>
+    </Producto>
+    <Producto>
+        <ID>118</ID>
+        <Nombre>Silla Gamer</Nombre>
+        <Descripcion>Silla ergonómica con soporte lumbar</Descripcion>
+        <Precio>249.99</Precio>
+        <Stock>15</Stock>
+    </Producto>
+    <Producto>
+        <ID>119</ID>
+        <Nombre>Case para PC</Nombre>
+        <Descripcion>Gabinete ATX con ventilación RGB</Descripcion>
+        <Precio>110.75</Precio>
+        <Stock>25</Stock>
+    </Producto>
+    <Producto>
+        <ID>120</ID>
+        <Nombre>Controlador de juegos</Nombre>
+        <Descripcion>Mando inalámbrico compatible con PC y consolas</Descripcion>
+        <Precio>59.99</Precio>
+        <Stock>50</Stock>
     </Producto>
 </Productos>

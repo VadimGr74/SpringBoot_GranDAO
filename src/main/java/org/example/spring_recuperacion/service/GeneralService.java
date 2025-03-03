@@ -15,8 +15,7 @@ import org.example.spring_recuperacion.repository.DevolucioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +45,24 @@ public class GeneralService {
     // ==============================
 
     public List<ClienteDTO> obtenerTodosLosClientes() {
-        return daoClientes.leerFicheroTXT();
+        List<ClienteDTO> clientes = daoClientes.leerFicheroTXT();
+
+        // Evita devolver una lista con datos nulos
+        if (clientes == null || clientes.isEmpty()) {
+            System.err.println("⚠ No se encontraron clientes en el archivo.");
+            return new ArrayList<>(); // Devuelve una lista vacía en lugar de `null`
+        }
+
+        return clientes;
     }
 
-    public Optional<ClienteDTO> obtenerClientePorId(Integer id) {
+    public ClienteDTO obtenerClientePorId(Integer idBuscado) {
         return daoClientes.leerFicheroTXT().stream()
-                .filter(cliente -> cliente.getId().equals(id))
-                .findFirst();
+                .filter(clienteDTO-> clienteDTO.getId() != null && clienteDTO.getId().equals(idBuscado)) // ✅ Evita NullPointerException
+                .findFirst()
+                .orElse(null);
     }
+
 
     public void guardarClientes(List<ClienteDTO> clientes) {
         daoClientes.escribirFicheroTXT(clientes);
@@ -89,7 +98,7 @@ public class GeneralService {
 
     public Optional<ProductoDTO> obtenerProductoPorId(Integer id) {
         return daoProductos.leerFicheroXML().stream()
-                .filter(producto -> producto.getId().equals(id))
+                .filter(productoDTO -> productoDTO.getId() != null && productoDTO.getId().equals(id))
                 .findFirst();
     }
 
@@ -100,7 +109,7 @@ public class GeneralService {
     public ProductoDTO actualizarProducto(Integer id, ProductoDTO productoDTO) {
         List<ProductoDTO> productos = daoProductos.leerFicheroXML();
         for (int i = 0; i < productos.size(); i++) {
-            if (productos.get(i).getId().equals(id)) {
+            if (Objects.equals(productoDTO.getId(), productos.get(i).getId())) {
                 productos.set(i, productoDTO);
                 daoProductos.escribirFicheroXML(productos);
                 return productoDTO;
@@ -133,8 +142,10 @@ public class GeneralService {
     public CompraDTO guardarCompra(CompraDTO compraDTO) {
         Compra compra = convertirCompraDTOACompra(compraDTO);
         Compra compraGuardada = compraRepository.save(compra);
+        System.out.println("CompraDTO recibido: " + compraGuardada);
         return convertirCompraACompraDTO(compraGuardada);
     }
+
 
     public void eliminarCompra(Integer id) {
         compraRepository.deleteById(id);
@@ -171,9 +182,33 @@ public class GeneralService {
         return new CompraDTO(compra.getId(), compra.getCliente(), compra.getProducto(), compra.getFecha(), compra.getCantidad(), compra.getImporte());
     }
 
-    private Compra convertirCompraDTOACompra(CompraDTO compraDTO) {
-        return new Compra(compraDTO.getId(), compraDTO.getCliente(), compraDTO.getProducto(), compraDTO.getFecha(), compraDTO.getCantidad(), compraDTO.getImporte());
+    public Compra convertirCompraDTOACompra(CompraDTO compraDTO) {
+        Compra compra = new Compra();
+        compra.setCantidad(compraDTO.getCantidad());
+        compra.setFecha(compraDTO.getFecha());
+        compra.setImporte(compraDTO.getImporte());
+
+        // Validar y asignar Cliente
+        if (compraDTO.getCliente() != null && compraDTO.getCliente().getId() != null) {
+            Cliente cliente = new Cliente();
+            cliente.setId(compraDTO.getCliente().getId());
+            compra.setCliente(cliente);
+        } else {
+            throw new IllegalArgumentException("El cliente o el cliente_id no pueden ser nulos");
+        }
+
+        // ✅ Validar y asignar Producto
+        if (compraDTO.getProducto() != null && compraDTO.getProducto().getId() != null) {
+            Producto producto = new Producto();
+            producto.setId(compraDTO.getProducto().getId());
+            compra.setProducto(producto);
+        } else {
+            throw new IllegalArgumentException("El producto o el producto_id no pueden ser nulos");
+        }
+
+        return compra;
     }
+
 
     private DevolucioneDTO convertirDevolucionADevolucionDTO(Devolucione devolucion) {
         return new DevolucioneDTO(devolucion.getId(), devolucion.getCliente(), devolucion.getProducto(), devolucion.getFecha(), devolucion.getCantidad(), devolucion.getMotivo());
